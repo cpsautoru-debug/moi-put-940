@@ -299,11 +299,11 @@
   <div class="sync-bar">
     <span class="sync-dot" id="syncDot"></span>
     <span id="syncText">Подключение...</span>
-    <button class="secondary" onclick="manualSync()" style="margin:0;padding:4px 10px;font-size:12px;">🔄 Синхронизировать</button>
+    <button class="secondary" onclick="manualSync()" style="margin:0;padding:4px 10px;font-size:12px;"> Синхронизировать</button>
   </div>
 
   <div class="user-switch">
-    <button class="user-btn active" data-user="anton"> Антон</button>
+    <button class="user-btn active" data-user="anton">👤 Антон</button>
     <button class="user-btn" data-user="wife">👤 Ольга</button>
   </div>
 
@@ -311,7 +311,7 @@
     <button class="tab active" data-tab="dashboard">📊 Сегодня</button>
     <button class="tab" data-tab="habits">✅ Привычки</button>
     <button class="tab" data-tab="diary">📖 Дневник</button>
-    <button class="tab" data-tab="stats"> Статистика</button>
+    <button class="tab" data-tab="stats">📈 Статистика</button>
     <button class="tab" data-tab="settings">⚙️ Настройки</button>
   </div>
 
@@ -349,10 +349,10 @@
       <div class="add-row">
         <input type="text" id="newHabitName" placeholder="Название привычки...">
         <select id="newHabitCat">
-          <option value="health"> Здоровье</option>
+          <option value="health">🏃 Здоровье</option>
           <option value="finance">💰 Финансы</option>
           <option value="relations">❤️ Отношения</option>
-          <option value="growth"> Развитие</option>
+          <option value="growth">📚 Развитие</option>
           <option value="energy">⚡ Энергия</option>
         </select>
         <button class="primary" onclick="addHabit()">+ Добавить</button>
@@ -365,7 +365,7 @@
       <h2>📖 Мини-дневник</h2>
       <div class="diary-block"><label>🏆 Что сегодня получилось?</label><textarea id="diaryWins" placeholder="Мои победы за день..."></textarea></div>
       <div class="diary-block"><label>💡 Инсайт / урок дня</label><textarea id="diaryInsight" placeholder="Что понял, что осознал..."></textarea></div>
-      <div class="diary-block"><label> Благодарность</label><textarea id="diaryGratitude" placeholder="За что благодарен..."></textarea></div>
+      <div class="diary-block"><label>🙏 Благодарность</label><textarea id="diaryGratitude" placeholder="За что благодарен..."></textarea></div>
       <div class="diary-block"><label>🎯 Завтрашний фокус</label><textarea id="diaryFocus" placeholder="Одна вещь, на которой сфокусируюсь завтра..."></textarea></div>
       <button class="primary" onclick="saveDiary()">💾 Сохранить запись</button>
     </div>
@@ -410,7 +410,7 @@
 
 <script>
 // ============================================
-//  НАСТРОЙКИ SUPABASE — ВСТАВЬ СВОИ ДАННЫЕ
+// НАСТРОЙКИ SUPABASE
 // ============================================
 const SUPABASE_URL = 'https://tdsmcrprzteozjzsvssz.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkc21jcnByenRlb3pqenN2c3N6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNDE1OTYsImV4cCI6MjEwNDkxNzU5Nn0.cdKWpwG9B_O1sHAf6QHxDGbE3uKd5hjIqeOrGVYAIVw';
@@ -419,8 +419,11 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const STORAGE_KEY = 'moi_put_940';
 const CATEGORIES = {
-  health: '🏃 Здоровье', finance: '💰 Финансы', relations: '❤️ Отношения',
-  growth: '📚 Развитие', energy: '⚡ Энергия'
+  health: '🏃 Здоровье',
+  finance: '💰 Финансы',
+  relations: '❤️ Отношения',
+  growth: '📚 Развитие',
+  energy: ' Энергия'
 };
 const QUOTES = [
   "Маленькие ежедневные улучшения со временем приводят к потрясающим результатам.",
@@ -454,7 +457,6 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  // Debounce — сохраняем в базу не чаще раза в 2 секунды
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(() => saveToSupabase(currentUser), 2000);
 }
@@ -477,7 +479,6 @@ async function loadFromSupabase(userId) {
       .single();
     
     if (error && error.code === 'PGRST116') {
-      // Записи нет — создадим при первом сохранении
       setSyncStatus('ok', '✅ Подключено к облаку');
       return null;
     }
@@ -493,7 +494,7 @@ async function loadFromSupabase(userId) {
     return null;
   } catch (err) {
     console.error('Ошибка загрузки:', err);
-    setSyncStatus('error', '⚠️ Ошибка сети. Работаем локально.');
+    setSyncStatus('error', '⚠️ Ошибка сети');
     return null;
   }
 }
@@ -513,7 +514,7 @@ async function saveToSupabase(userId) {
     setSyncStatus('ok', '✅ Сохранено в облако');
   } catch (err) {
     console.error('Ошибка сохранения:', err);
-    setSyncStatus('error', '⚠️ Не удалось сохранить в облако');
+    setSyncStatus('error', '⚠️ Не удалось сохранить');
   }
 }
 
@@ -525,18 +526,16 @@ async function manualSync() {
 
 // --- INIT ---
 async function init() {
-  // Загружаем данные обоих пользователей из облака
   await Promise.all([
     loadFromSupabase('anton'),
     loadFromSupabase('wife')
   ]);
   
-  // Применяем имена
   document.getElementById('startDate').value = state.startDate;
   document.getElementById('nameAnton').value = state.names.anton;
   document.getElementById('nameWife').value = state.names.wife;
   document.querySelectorAll('.user-btn').forEach(b => {
-    b.textContent = ' ' + state.names[b.dataset.user];
+    b.textContent = '👤 ' + state.names[b.dataset.user];
   });
   
   renderAll();
@@ -683,11 +682,11 @@ function renderDiary() {
   }
   cont.innerHTML = entries.slice(0, 30).map(([date, e]) => `
     <div class="diary-entry">
-      <div class="date">📅 ${formatDate(date)}</div>
+      <div class="date"> ${formatDate(date)}</div>
       ${e.wins ? `<div><strong>🏆 Победы:</strong> ${escapeHtml(e.wins)}</div>` : ''}
       ${e.insight ? `<div><strong>💡 Инсайт:</strong> ${escapeHtml(e.insight)}</div>` : ''}
       ${e.gratitude ? `<div><strong>🙏 Благодарность:</strong> ${escapeHtml(e.gratitude)}</div>` : ''}
-      ${e.focus ? `<div><strong> Фокус на завтра:</strong> ${escapeHtml(e.focus)}</div>` : ''}
+      ${e.focus ? `<div><strong>🎯 Фокус на завтра:</strong> ${escapeHtml(e.focus)}</div>` : ''}
     </div>
   `).join('');
 }
@@ -795,7 +794,7 @@ function saveSettings() {
   state.names.wife = document.getElementById('nameWife').value || 'Ольга';
   saveState();
   document.querySelectorAll('.user-btn').forEach(b => {
-    b.textContent = '👤 ' + state.names[b.dataset.user];
+    b.textContent = ' ' + state.names[b.dataset.user];
   });
   alert('✅ Сохранено');
   renderAll();
