@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мой путь 940 — Демо</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #fef3e2 0%, #e8f5e9 100%);
+    color: #2c3e50;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #ff9a56 0%, #56c596 100%);
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  header h1 { font-size: 2.2em; margin-bottom: 8px; }
+  header p { opacity: 0.95; font-size: 1.05em; }
+  .demo-banner {
+    background: #fff3cd;
+    border: 2px dashed #ff9a56;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tab {
+    padding: 10px 20px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .tab:hover { transform: translateY(-2px); }
+  .tab.active {
+    background: linear-gradient(135deg, #ff9a56, #56c596);
+    color: white;
+  }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+  .card h2 { margin-bottom: 16px; font-size: 1.3em; }
+  .progress-wrap {
+    background: #f0f0f0;
+    border-radius: 20px;
+    height: 28px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px 0;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff9a56, #56c596);
+    border-radius: 20px;
+    transition: width 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+  }
+  .stat-box {
+    background: linear-gradient(135deg, #fff8ef, #e8f5e9);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .stat-box .num { font-size: 1.8em; font-weight: 700; color: #ff7a3c; }
+  .stat-box .label { font-size: 0.85em; color: #666; margin-top: 4px; }
+  .user-switch {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .user-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 2px solid #ff9a56;
+    background: white;
+    color: #ff7a3c;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .user-btn.active {
+    background: #ff9a56;
+    color: white;
+  }
+  .habit-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #fafafa;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+  }
+  .habit-item:hover { background: #f0f0f0; }
+  .habit-item.done {
+    background: linear-gradient(90deg, #e8f5e9, #c8e6c9);
+  }
+  .habit-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #56c596;
+  }
+  .habit-name { flex: 1; font-size: 15px; }
+  .habit-category {
+    font-size: 11px;
+    padding: 3px 8px;
+    background: #ff9a56;
+    color: white;
+    border-radius: 10px;
+    margin-left: 8px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+  textarea:focus { outline: none; border-color: #56c596; }
+  .diary-block { margin-bottom: 15px; }
+  .diary-block label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #555;
+    font-size: 14px;
+  }
+  .diary-entry {
+    background: #fafafa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid #56c596;
+  }
+  .diary-entry .date {
+    font-weight: 600;
+    color: #ff7a3c;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .quote {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    padding: 15px;
+    background: #fff8ef;
+    border-radius: 10px;
+    margin-top: 15px;
+  }
+  .hidden { display: none; }
+  button.primary {
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #ff9a56, #56c596);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .heatmap {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    gap: 2px;
+    margin-top: 10px;
+  }
+  .heatmap-cell {
+    aspect-ratio: 1;
+    background: #eee;
+    border-radius: 2px;
+    min-width: 8px;
+  }
+  .heatmap-cell.l1 { background: #c8e6c9; }
+  .heatmap-cell.l2 { background: #81c784; }
+  .heatmap-cell.l3 { background: #4caf50; }
+  .heatmap-cell.l4 { background: #2e7d32; }
+  .heatmap-cell.today { outline: 2px solid #ff7a3c; }
+  .legend {
+    display:flex;gap:6px;align-items:center;margin-top:10px;font-size:12px;color:#888;
+  }
+  .legend span.swatch {
+    width:12px;height:12px;border-radius:2px;display:inline-block;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🌱 Мой путь 940</h1>
+    <p>Маленькие шаги — большие перемены. По книге Даррена Харди</p>
+  </header>
+
+  <div class="demo-banner">
+    🎬 Это демо-версия с предзаполненными данными. Сохрани файл <code>moi-put-940.html</code> из прошлого сообщения, чтобы начать свой реальный путь.
+  </div>
+
+  <div class="user-switch">
+    <button class="user-btn active" data-user="anton">👤 Антон</button>
+    <button class="user-btn" data-user="wife">👤 Ольга</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="dashboard">📊 Сегодня</button>
+    <button class="tab" data-tab="habits">✅ Привычки</button>
+    <button class="tab" data-tab="diary">📖 Дневник</button>
+    <button class="tab" data-tab="stats">📈 Статистика</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="tab-content">
+    <div class="card">
+      <h2>Прогресс пути</h2>
+      <div id="progressInfo"></div>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar">0%</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="num" id="statDay">0</div><div class="label">Текущий день</div></div>
+        <div class="stat-box"><div class="num" id="statLeft">940</div><div class="label">Осталось дней</div></div>
+        <div class="stat-box"><div class="num" id="statStreak">0</div><div class="label">🔥 Серия дней</div></div>
+        <div class="stat-box"><div class="num" id="statToday">0%</div><div class="label">Выполнено сегодня</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Привычки на сегодня</h2>
+      <div id="todayHabits"></div>
+    </div>
+
+    <div class="card">
+      <h2>Быстрая запись в дневник</h2>
+      <div class="diary-block">
+        <label>🙏 За что благодарен сегодня?</label>
+        <textarea placeholder="Три вещи, за которые благодарен..."></textarea>
+      </div>
+      <button class="primary">Сохранить</button>
+      <div class="quote" id="quote"></div>
+    </div>
+  </div>
+
+  <!-- HABITS -->
+  <div id="habits" class="tab-content hidden">
+    <div class="card">
+      <h2>Мои привычки</h2>
+      <div id="habitsList"></div>
+    </div>
+  </div>
+
+  <!-- DIARY -->
+  <div id="diary" class="tab-content hidden">
+    <div class="card">
+      <h2>Предыдущие записи</h2>
+      <div id="diaryHistory"></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div id="stats" class="tab-content hidden">
+    <div class="card">
+      <h2>Выполнение по неделям</h2>
+      <canvas id="weeklyChart" height="100"></canvas>
+    </div>
+    <div class="card">
+      <h2>Тепловая карта активности</h2>
+      <div class="heatmap" id="heatmap"></div>
+      <div class="legend">
+        Меньше
+        <span class="swatch" style="background:#eee;"></span>
+        <span class="swatch" style="background:#c8e6c9;"></span>
+        <span class="swatch" style="background:#81c784;"></span>
+        <span class="swatch" style="background:#4caf50;"></span>
+        <span class="swatch" style="background:#2e7d32;"></span>
+        Больше
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATEGORIES = {
+  health: '🏃 Здоровье',
+  finance: '💰 Финансы',
+  relations: '❤️ Отношения',
+  growth: '📚 Развитие',
+  energy: '⚡ Энергия'
+};
+const QUOTES = [
+  "Маленькие ежедневные улучшения со временем приводят к потрясающим результатам.",
+  "Успех — это несколько простых дисциплин, выполняемых каждый день.",
+  "Привычки — это босс. Они либо лучший слуга, либо худший хозяин."
+];
+
+// Генерация демо-данных за 47 дней
+function generateDemoData() {
+  const start = new Date();
+  start.setDate(start.getDate() - 46);
+  const startStr = start.toISOString().split('T')[0];
+
+  const antonHabits = [
+    { id: 'h1', name: '10 000 шагов', category: 'health' },
+    { id: 'h2', name: 'Читать 20 страниц', category: 'growth' },
+    { id: 'h3', name: 'Медитация 10 минут', category: 'energy' },
+    { id: 'h4', name: '2 литра воды', category: 'health' },
+    { id: 'h5', name: '15 мин разговора с женой без телефонов', category: 'relations' }
+  ];
+  const wifeHabits = [
+    { id: 'w1', name: 'Йога 20 минут', category: 'health' },
+    { id: 'w2', name: 'Читать 20 страниц', category: 'growth' },
+    { id: 'w3', name: 'Планирование дня утром', category: 'energy' },
+    { id: 'w4', name: 'Без соцсетей первый час', category: 'energy' }
+  ];
+
+  const antonLog = {};
+  const wifeLog = {};
+  const antonDiary = {};
+  const wifeDiary = {};
+
+  const diaryTexts = [
+    { wins: 'Удалось рано вставать 5 дней подряд. Чувствую прилив энергии.', insight: 'Утро задаёт тон всему дню. Если начал хорошо — день идёт как по маслу.', gratitude: 'За здоровье, за семью, за возможность меняться.', focus: 'Не отвлекаться на соцсети до обеда.' },
+    { wins: 'Прочитал 3 главы книги Харди. Ольга поддержала — вместе обсуждали вечером.', insight: 'Маленькие шаги реально работают. Не верил, но вижу результат.', gratitude: 'За Ольгу, которая идёт этим путём вместе со мной.', focus: 'Добавить вечернюю прогулку.' },
+    { wins: 'Сделал все 5 привычек! Первый такой день за месяц.', insight: 'Дисциплина — это мост между целями и достижениями.', gratitude: 'За новое осознание, за книгу, за поддержку.', focus: 'Удержать темп завтра.' },
+    { wins: 'Начал записывать расходы. Увидел, сколько уходит на ерунду.', insight: 'Финансы — это не про ограничения, а про осознанность.', gratitude: 'За урок, за честность с собой.', focus: 'Продолжить учёт расходов.' }
+  ];
+
+  for (let i = 0; i < 47; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const ds = d.toISOString().split('T')[0];
+
+    const baseRate = 0.6 + (i / 47) * 0.3;
+    const antonDay = {};
+    antonHabits.forEach(h => {
+      antonDay[h.id] = Math.random() < baseRate;
+    });
+    if (i >= 33) {
+      antonHabits.forEach(h => antonDay[h.id] = true);
+    }
+    antonLog[ds] = antonDay;
+
+    const wifeBase = 0.55 + (i / 47) * 0.35;
+    const wifeDay = {};
+    wifeHabits.forEach(h => {
+      wifeDay[h.id] = Math.random() < wifeBase;
+    });
+    if (i >= 35) {
+      wifeHabits.forEach(h => wifeDay[h.id] = true);
+    }
+    wifeLog[ds] = wifeDay;
+
+    if (i % 4 === 0 && i > 0) {
+      const entry = diaryTexts[Math.floor(i / 4) % diaryTexts.length];
+      if (i < 24) antonDiary[ds] = entry;
+      else wifeDiary[ds] = entry;
+    }
+  }
+
+  return {
+    startDate: startStr,
+    totalDays: 940,
+    names: { anton: 'Антон', wife: 'Ольга' },
+    users: {
+      anton: { habits: antonHabits, log: antonLog, diary: antonDiary },
+      wife: { habits: wifeHabits, log: wifeLog, diary: wifeDiary }
+    }
+  };
+}
+
+let state = generateDemoData();
+let currentUser = 'anton';
+let weeklyChart = null;
+
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+function daysBetween(d1, d2) {
+  return Math.floor((new Date(d2) - new Date(d1)) / 86400000) + 1;
+}
+function formatDate(d) {
+  return new Date(d).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.add('hidden'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.remove('hidden');
+    if (t.dataset.tab === 'stats') renderStats();
+    if (t.dataset.tab === 'diary') renderDiary();
+    if (t.dataset.tab === 'habits') renderHabits();
+  };
+});
+
+document.querySelectorAll('.user-btn').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.user-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    currentUser = b.dataset.user;
+    renderAll();
+  };
+});
+
+function renderDashboard() {
+  const today = todayStr();
+  const currentDay = daysBetween(state.startDate, today);
+  const total = state.totalDays;
+  const pct = Math.min(100, Math.max(0, (currentDay / total) * 100));
+  const left = Math.max(0, total - currentDay);
+
+  document.getElementById('progressInfo').innerHTML =
+    `<strong>День ${currentDay} из ${total}</strong> · Начало: ${formatDate(state.startDate)}`;
+  const bar = document.getElementById('progressBar');
+  bar.style.width = pct + '%';
+  bar.textContent = pct.toFixed(1) + '%';
+
+  document.getElementById('statDay').textContent = currentDay;
+  document.getElementById('statLeft').textContent = left;
+
+  const log = state.users[currentUser].log;
+  let streak = 0;
+  let d = new Date(today);
+  while (true) {
+    const ds = d.toISOString().split('T')[0];
+    const dayLog = log[ds];
+    if (!dayLog) break;
+    const allDone = state.users[currentUser].habits.every(h => dayLog[h.id]);
+    if (!allDone) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  document.getElementById('statStreak').textContent = streak;
+
+  const habits = state.users[currentUser].habits;
+  const todayLog = log[today] || {};
+  const done = habits.filter(h => todayLog[h.id]).length;
+  const todayPct = habits.length ? Math.round((done / habits.length) * 100) : 0;
+  document.getElementById('statToday').textContent = todayPct + '%';
+
+  const cont = document.getElementById('todayHabits');
+  cont.innerHTML = habits.map(h => {
+    const checked = todayLog[h.id] ? 'checked' : '';
+    const cls = todayLog[h.id] ? 'done' : '';
+    return `<div class="habit-item ${cls}">
+      <input type="checkbox" ${checked}>
+      <span class="habit-name">${h.name}</span>
+      <span class="habit-category">${CATEGORIES[h.category]}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('quote').textContent = '«' + QUOTES[Math.floor(Math.random() * QUOTES.length)] + '» — Даррен Харди';
+}
+
+function renderHabits() {
+  const habits = state.users[currentUser].habits;
+  document.getElementById('habitsList').innerHTML = habits.map(h => `
+    <div class="habit-item">
+      <span class="habit-name">${h.name}</span>
+      <span class="habit-category">${CATEGORIES[h.category]}</span>
+    </div>
+  `).join('');
+}
+
+function renderDiary() {
+  const diary = state.users[currentUser].diary;
+  const entries = Object.entries(diary).sort((a, b) => b[0].localeCompare(a[0]));
+  const cont = document.getElementById('diaryHistory');
+  if (entries.length === 0) {
+    cont.innerHTML = '<p style="color:#888;text-align:center;padding:20px;">Записей пока нет</p>';
+    return;
+  }
+  cont.innerHTML = entries.map(([date, e]) => `
+    <div class="diary-entry">
+      <div class="date">📅 ${formatDate(date)}</div>
+      ${e.wins ? `<div><strong>🏆 Победы:</strong> ${escapeHtml(e.wins)}</div>` : ''}
+      ${e.insight ? `<div><strong>💡 Инсайт:</strong> ${escapeHtml(e.insight)}</div>` : ''}
+      ${e.gratitude ? `<div><strong>🙏 Благодарность:</strong> ${escapeHtml(e.gratitude)}</div>` : ''}
+      ${e.focus ? `<div><strong>🎯 Фокус на завтра:</strong> ${escapeHtml(e.focus)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderStats() {
+  const log = state.users[currentUser].log;
+  const habits = state.users[currentUser].habits;
+
+  const weeks = {};
+  Object.entries(log).forEach(([date, dayLog]) => {
+    const d = new Date(date);
+    const weekStart = new Date(d);
+    weekStart.setDate(d.getDate() - d.getDay());
+    const key = weekStart.toISOString().split('T')[0];
+    if (!weeks[key]) weeks[key] = { total: 0, done: 0 };
+    habits.forEach(h => {
+      weeks[key].total++;
+      if (dayLog[h.id]) weeks[key].done++;
+    });
+  });
+  const sortedWeeks = Object.entries(weeks).sort((a, b) => a[0].localeCompare(b[0])).slice(-12);
+  const labels = sortedWeeks.map(([w]) => {
+    const d = new Date(w);
+    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+  });
+  const data = sortedWeeks.map(([, v]) => v.total ? Math.round((v.done / v.total) * 100) : 0);
+
+  const ctx = document.getElementById('weeklyChart').getContext('2d');
+  if (weeklyChart) weeklyChart.destroy();
+  weeklyChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Выполнение, %',
+        data,
+        borderColor: '#56c596',
+        backgroundColor: 'rgba(86,197,150,0.2)',
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true, max: 100 } },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  const heatmap = document.getElementById('heatmap');
+  heatmap.innerHTML = '';
+  const today = new Date();
+  const start = new Date(state.startDate);
+  for (let i = 0; i < 371; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const ds = d.toISOString().split('T')[0];
+    const cell = document.createElement('div');
+    cell.className = 'heatmap-cell';
+    const dayLog = log[ds];
+    if (dayLog && habits.length > 0) {
+      const pct = habits.filter(h => dayLog[h.id]).length / habits.length;
+      if (pct > 0) cell.classList.add('l1');
+      if (pct >= 0.5) cell.classList.add('l2');
+      if (pct >= 0.8) cell.classList.add('l3');
+      if (pct >= 1) cell.classList.add('l4');
+    }
+    if (ds === todayStr()) cell.classList.add('today');
+    heatmap.appendChild(cell);
+  }
+}
+
+function renderAll() {
+  renderDashboard();
+}
+
+renderAll();
+</script>
+</body>
+</html>
