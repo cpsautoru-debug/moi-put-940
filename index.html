@@ -39,181 +39,60 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     font-size: 13px;
   }
-  .sync-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #ccc;
-  }
+  .sync-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
   .sync-dot.ok { background: #56c596; }
   .sync-dot.syncing { background: #ff9a56; animation: pulse 1s infinite; }
   .sync-dot.error { background: #e74c3c; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
   .tab {
-    padding: 10px 20px;
-    background: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    transition: all 0.2s;
+    padding: 10px 20px; background: white; border: none; border-radius: 12px;
+    cursor: pointer; font-size: 15px; font-weight: 500; transition: all 0.2s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
   .tab:hover { transform: translateY(-2px); }
-  .tab.active {
-    background: linear-gradient(135deg, #ff9a56, #56c596);
-    color: white;
-  }
+  .tab.active { background: linear-gradient(135deg, #ff9a56, #56c596); color: white; }
   .card {
-    background: white;
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 20px;
+    background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.06);
   }
   .card h2 { margin-bottom: 16px; font-size: 1.3em; }
-  .progress-wrap {
-    background: #f0f0f0;
-    border-radius: 20px;
-    height: 28px;
-    overflow: hidden;
-    margin: 10px 0;
-  }
+  .progress-wrap { background: #f0f0f0; border-radius: 20px; height: 28px; overflow: hidden; margin: 10px 0; }
   .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #ff9a56, #56c596);
-    border-radius: 20px;
-    transition: width 0.6s ease;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 10px;
-    color: white;
-    font-weight: 600;
-    font-size: 13px;
+    height: 100%; background: linear-gradient(90deg, #ff9a56, #56c596); border-radius: 20px;
+    transition: width 0.6s ease; display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 13px;
   }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-top: 15px;
-  }
-  .stat-box {
-    background: linear-gradient(135deg, #fff8ef, #e8f5e9);
-    padding: 14px;
-    border-radius: 12px;
-    text-align: center;
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
+  .stat-box { background: linear-gradient(135deg, #fff8ef, #e8f5e9); padding: 14px; border-radius: 12px; text-align: center; }
   .stat-box .num { font-size: 1.7em; font-weight: 700; color: #ff7a3c; }
   .stat-box .label { font-size: 0.82em; color: #666; margin-top: 4px; }
-  .user-switch {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
+  .user-switch { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
   .user-btn {
-    padding: 8px 18px;
-    border-radius: 20px;
-    border: 2px solid #ff9a56;
-    background: white;
-    color: #ff7a3c;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
+    padding: 8px 18px; border-radius: 20px; border: 2px solid #ff9a56;
+    background: white; color: #ff7a3c; cursor: pointer; font-weight: 500; transition: all 0.2s;
   }
-  .user-btn.active {
-    background: #ff9a56;
-    color: white;
-  }
-  .habit-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background: #fafafa;
-    border-radius: 10px;
-    margin-bottom: 8px;
-  }
+  .user-btn.active { background: #ff9a56; color: white; }
+  .habit-item { display: flex; align-items: center; padding: 12px; background: #fafafa; border-radius: 10px; margin-bottom: 8px; }
   .habit-item.done { background: linear-gradient(90deg, #e8f5e9, #c8e6c9); }
-  .habit-item input[type="checkbox"] {
-    width: 22px;
-    height: 22px;
-    margin-right: 12px;
-    cursor: pointer;
-    accent-color: #56c596;
-  }
+  .habit-item input[type="checkbox"] { width: 22px; height: 22px; margin-right: 12px; cursor: pointer; accent-color: #56c596; }
   .habit-name { flex: 1; font-size: 15px; }
-  .habit-category {
-    font-size: 11px;
-    padding: 3px 8px;
-    background: #ff9a56;
-    color: white;
-    border-radius: 10px;
-    margin-left: 8px;
-  }
-  .habit-del {
-    background: none;
-    border: none;
-    color: #ccc;
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 8px;
-  }
+  .habit-category { font-size: 11px; padding: 3px 8px; background: #ff9a56; color: white; border-radius: 10px; margin-left: 8px; }
+  .habit-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; margin-left: 8px; }
   .habit-del:hover { color: #e74c3c; }
-  .add-row {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    flex-wrap: wrap;
-  }
-  .add-row input, .add-row select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-  }
+  .add-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .add-row input, .add-row select { padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
   .add-row input { flex: 1; min-width: 150px; }
   button.primary {
-    padding: 10px 18px;
-    background: linear-gradient(135deg, #ff9a56, #56c596);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
+    padding: 10px 18px; background: linear-gradient(135deg, #ff9a56, #56c596);
+    color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
   }
-  button.primary:hover { transform: translateY(-1px); }
   button.secondary {
-    padding: 8px 14px;
-    background: #f0f0f0;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-right: 6px;
-    margin-bottom: 6px;
+    padding: 8px 14px; background: #f0f0f0; border: none; border-radius: 8px;
+    cursor: pointer; font-size: 14px; margin-right: 6px; margin-bottom: 6px;
   }
-  button.secondary:hover { background: #e0e0e0; }
-  .heatmap {
-    display: grid;
-    grid-template-columns: repeat(53, 1fr);
-    gap: 2px;
-    margin-top: 10px;
-  }
-  .heatmap-cell {
-    aspect-ratio: 1;
-    background: #eee;
-    border-radius: 2px;
-    min-width: 8px;
-  }
+  .heatmap { display: grid; grid-template-columns: repeat(53, 1fr); gap: 2px; margin-top: 10px; }
+  .heatmap-cell { aspect-ratio: 1; background: #eee; border-radius: 2px; min-width: 8px; }
   .heatmap-cell.l1 { background: #c8e6c9; }
   .heatmap-cell.l2 { background: #81c784; }
   .heatmap-cell.l3 { background: #4caf50; }
@@ -221,72 +100,22 @@
   .heatmap-cell.future { background: #f5f5f5; border: 1px dashed #ddd; }
   .heatmap-cell.today { outline: 2px solid #ff7a3c; }
   textarea {
-    width: 100%;
-    min-height: 100px;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 14px;
-    resize: vertical;
-    margin-bottom: 10px;
+    width: 100%; min-height: 100px; padding: 12px; border: 1px solid #ddd;
+    border-radius: 10px; font-family: inherit; font-size: 14px; resize: vertical; margin-bottom: 10px;
   }
   textarea:focus { outline: none; border-color: #56c596; }
   .diary-block { margin-bottom: 15px; }
-  .diary-block label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #555;
-    font-size: 14px;
-  }
-  .diary-entry {
-    background: #fafafa;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border-left: 4px solid #56c596;
-  }
-  .diary-entry .date {
-    font-weight: 600;
-    color: #ff7a3c;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-  .quote {
-    text-align: center;
-    font-style: italic;
-    color: #666;
-    padding: 15px;
-    background: #fff8ef;
-    border-radius: 10px;
-    margin-top: 15px;
-  }
+  .diary-block label { display: block; font-weight: 600; margin-bottom: 6px; color: #555; font-size: 14px; }
+  .diary-entry { background: #fafafa; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #56c596; }
+  .diary-entry .date { font-weight: 600; color: #ff7a3c; margin-bottom: 8px; font-size: 13px; }
+  .quote { text-align: center; font-style: italic; color: #666; padding: 15px; background: #fff8ef; border-radius: 10px; margin-top: 15px; }
   .hidden { display: none; }
-  .settings-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
+  .settings-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
   .settings-row label { min-width: 140px; font-weight: 500; }
-  .settings-row input {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-  }
-  .legend {
-    display:flex;gap:6px;align-items:center;margin-top:10px;font-size:12px;color:#888;
-  }
-  .legend span.swatch {
-    width:12px;height:12px;border-radius:2px;display:inline-block;
-  }
-  @media (max-width: 600px) {
-    header h1 { font-size: 1.6em; }
-    .heatmap { grid-template-columns: repeat(47, 1fr); }
-  }
+  .settings-row input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+  .legend { display:flex;gap:6px;align-items:center;margin-top:10px;font-size:12px;color:#888; }
+  .legend span.swatch { width:12px;height:12px;border-radius:2px;display:inline-block; }
+  @media (max-width: 600px) { header h1 { font-size: 1.6em; } .heatmap { grid-template-columns: repeat(47, 1fr); } }
 </style>
 </head>
 <body>
@@ -299,7 +128,7 @@
   <div class="sync-bar">
     <span class="sync-dot" id="syncDot"></span>
     <span id="syncText">Подключение...</span>
-    <button class="secondary" onclick="manualSync()" style="margin:0;padding:4px 10px;font-size:12px;"> Синхронизировать</button>
+    <button class="secondary" onclick="manualSync()" style="margin:0;padding:4px 10px;font-size:12px;">🔄 Синхронизировать</button>
   </div>
 
   <div class="user-switch">
@@ -310,7 +139,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="dashboard">📊 Сегодня</button>
     <button class="tab" data-tab="habits">✅ Привычки</button>
-    <button class="tab" data-tab="diary">📖 Дневник</button>
+    <button class="tab" data-tab="diary"> Дневник</button>
     <button class="tab" data-tab="stats">📈 Статистика</button>
     <button class="tab" data-tab="settings">⚙️ Настройки</button>
   </div>
@@ -323,14 +152,11 @@
       <div class="stats-grid">
         <div class="stat-box"><div class="num" id="statDay">0</div><div class="label">Текущий день</div></div>
         <div class="stat-box"><div class="num" id="statLeft">940</div><div class="label">Осталось дней</div></div>
-        <div class="stat-box"><div class="num" id="statStreak">0</div><div class="label"> Серия дней</div></div>
+        <div class="stat-box"><div class="num" id="statStreak">0</div><div class="label">🔥 Серия дней</div></div>
         <div class="stat-box"><div class="num" id="statToday">0%</div><div class="label">Выполнено сегодня</div></div>
       </div>
     </div>
-    <div class="card">
-      <h2>Привычки на сегодня</h2>
-      <div id="todayHabits"></div>
-    </div>
+    <div class="card"><h2>Привычки на сегодня</h2><div id="todayHabits"></div></div>
     <div class="card">
       <h2>Быстрая запись в дневник</h2>
       <div class="diary-block">
@@ -367,7 +193,7 @@
       <div class="diary-block"><label>💡 Инсайт / урок дня</label><textarea id="diaryInsight" placeholder="Что понял, что осознал..."></textarea></div>
       <div class="diary-block"><label>🙏 Благодарность</label><textarea id="diaryGratitude" placeholder="За что благодарен..."></textarea></div>
       <div class="diary-block"><label>🎯 Завтрашний фокус</label><textarea id="diaryFocus" placeholder="Одна вещь, на которой сфокусируюсь завтра..."></textarea></div>
-      <button class="primary" onclick="saveDiary()">💾 Сохранить запись</button>
+      <button class="primary" onclick="saveDiary()"> Сохранить запись</button>
     </div>
     <div class="card"><h2>Предыдущие записи</h2><div id="diaryHistory"></div></div>
   </div>
@@ -403,7 +229,7 @@
       <button class="secondary" onclick="exportData()">📤 Экспорт (JSON)</button>
       <button class="secondary" onclick="document.getElementById('importFile').click()">📥 Импорт</button>
       <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
-      <button class="secondary" onclick="if(confirm('Точно сбросить ВСЕ данные?')){localStorage.removeItem('moi_put_940');location.reload();}">🗑 Сбросить всё</button>
+      <button class="secondary" onclick="if(confirm('Точно сбросить ВСЕ данные?')){localStorage.removeItem('moi_put_940');location.reload();}"> Сбросить всё</button>
     </div>
   </div>
 </div>
@@ -415,7 +241,8 @@
 const SUPABASE_URL = 'https://tdsmcrprzteozjzsvssz.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkc21jcnByenRlb3pqenN2c3N6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNDE1OTYsImV4cCI6MjEwNDkxNzU5Nn0.cdKWpwG9B_O1sHAf6QHxDGbE3uKd5hjIqeOrGVYAIVw';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// ВАЖНО: используем имя supabaseClient, чтобы не конфликтовать с библиотекой
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const STORAGE_KEY = 'moi_put_940';
 const CATEGORIES = {
@@ -423,7 +250,7 @@ const CATEGORIES = {
   finance: '💰 Финансы',
   relations: '❤️ Отношения',
   growth: '📚 Развитие',
-  energy: ' Энергия'
+  energy: '⚡ Энергия'
 };
 const QUOTES = [
   "Маленькие ежедневные улучшения со временем приводят к потрясающим результатам.",
@@ -461,7 +288,6 @@ function saveState() {
   saveTimeout = setTimeout(() => saveToSupabase(currentUser), 2000);
 }
 
-// --- SUPABASE ---
 function setSyncStatus(status, text) {
   const dot = document.getElementById('syncDot');
   const txt = document.getElementById('syncText');
@@ -472,7 +298,7 @@ function setSyncStatus(status, text) {
 async function loadFromSupabase(userId) {
   try {
     setSyncStatus('syncing', 'Синхронизация...');
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('user_data')
       .select('data')
       .eq('user_id', userId)
@@ -502,7 +328,7 @@ async function loadFromSupabase(userId) {
 async function saveToSupabase(userId) {
   try {
     setSyncStatus('syncing', 'Сохранение...');
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from('user_data')
       .upsert({
         user_id: userId,
@@ -524,7 +350,6 @@ async function manualSync() {
   renderAll();
 }
 
-// --- INIT ---
 async function init() {
   await Promise.all([
     loadFromSupabase('anton'),
@@ -546,7 +371,6 @@ function daysBetween(d1, d2) { return Math.floor((new Date(d2) - new Date(d1)) /
 function formatDate(d) { return new Date(d).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }); }
 function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-// --- TABS ---
 document.querySelectorAll('.tab').forEach(t => {
   t.onclick = () => {
     document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
@@ -559,7 +383,6 @@ document.querySelectorAll('.tab').forEach(t => {
   };
 });
 
-// --- USER SWITCH ---
 document.querySelectorAll('.user-btn').forEach(b => {
   b.onclick = () => {
     document.querySelectorAll('.user-btn').forEach(x => x.classList.remove('active'));
@@ -569,7 +392,6 @@ document.querySelectorAll('.user-btn').forEach(b => {
   };
 });
 
-// --- DASHBOARD ---
 function renderDashboard() {
   const today = todayStr();
   const start = state.startDate;
@@ -634,7 +456,6 @@ function toggleHabit(id) {
   renderDashboard();
 }
 
-// --- HABITS ---
 function renderHabits() {
   const habits = state.users[currentUser].habits;
   const cont = document.getElementById('habitsList');
@@ -671,7 +492,6 @@ function deleteHabit(id) {
   renderDashboard();
 }
 
-// --- DIARY ---
 function renderDiary() {
   const diary = state.users[currentUser].diary;
   const entries = Object.entries(diary).sort((a, b) => b[0].localeCompare(a[0]));
@@ -682,9 +502,9 @@ function renderDiary() {
   }
   cont.innerHTML = entries.slice(0, 30).map(([date, e]) => `
     <div class="diary-entry">
-      <div class="date"> ${formatDate(date)}</div>
+      <div class="date">📅 ${formatDate(date)}</div>
       ${e.wins ? `<div><strong>🏆 Победы:</strong> ${escapeHtml(e.wins)}</div>` : ''}
-      ${e.insight ? `<div><strong>💡 Инсайт:</strong> ${escapeHtml(e.insight)}</div>` : ''}
+      ${e.insight ? `<div><strong> Инсайт:</strong> ${escapeHtml(e.insight)}</div>` : ''}
       ${e.gratitude ? `<div><strong>🙏 Благодарность:</strong> ${escapeHtml(e.gratitude)}</div>` : ''}
       ${e.focus ? `<div><strong>🎯 Фокус на завтра:</strong> ${escapeHtml(e.focus)}</div>` : ''}
     </div>
@@ -722,7 +542,6 @@ function saveQuickDiary() {
   alert('🙏 Спасибо записано!');
 }
 
-// --- STATS ---
 function renderStats() {
   const log = state.users[currentUser].log;
   const habits = state.users[currentUser].habits;
@@ -787,7 +606,6 @@ function renderStats() {
   `;
 }
 
-// --- SETTINGS ---
 function saveSettings() {
   state.startDate = document.getElementById('startDate').value || state.startDate;
   state.names.anton = document.getElementById('nameAnton').value || 'Антон';
@@ -828,7 +646,6 @@ function importData(e) {
 
 function renderAll() { renderDashboard(); }
 
-// Запуск
 init();
 </script>
 </body>
